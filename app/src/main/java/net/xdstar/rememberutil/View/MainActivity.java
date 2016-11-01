@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import net.xdstar.rememberutil.Controller.PresentController;
@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private GridLayout newUnits;
     private GridLayout oldUnits;
-    private ImageButton btnAddNew;
-    private ImageButton btnSubNew;
-    private ImageButton btnSubOld;
+    private Button btnAddNew;
+    private Button btnSubNew;
+    private Button btnSubOld;
     private ArrayList<Integer> arrayList = new ArrayList<>();
     private PresentController controller;
     private Activity activity = this;
@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         controller = new PresentController(this, this);
         newUnits = (GridLayout) findViewById(R.id.grid_new_unit);
         oldUnits = (GridLayout) findViewById(R.id.grid_old_unit);
-        btnAddNew = (ImageButton) findViewById(R.id.btn_add_unit);
-        btnSubNew = (ImageButton) findViewById(R.id.btn_sub_unit);
-        btnSubOld = (ImageButton) findViewById(R.id.btn_sub_old);
+        btnAddNew = (Button) findViewById(R.id.btn_add_unit);
+        btnSubNew = (Button) findViewById(R.id.btn_sub_unit);
+        btnSubOld = (Button) findViewById(R.id.btn_sub_old);
         btnAddNew.setOnClickListener(this);
         btnSubNew.setOnClickListener(this);
         btnSubOld.setOnClickListener(this);
