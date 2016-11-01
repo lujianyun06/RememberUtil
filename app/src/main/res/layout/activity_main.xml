@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <GridLayout
+                android:id="@+id/grid_new_unit"
+                android:columnCount="4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </GridLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_add_unit"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:textColor="@color/white"
+                android:text="添加新单元"
+                android:background="@drawable/btn_green" />
+
+            <Button
+                android:id="@+id/btn_sub_unit"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
+                android:text="删除"
+                android:background="@drawable/btn_red" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="30dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <GridLayout
+                android:id="@+id/grid_old_unit"
+                android:columnCount="5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </GridLayout>
+        </ScrollView>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_sub_old"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:text="删除"
+            android:background="@drawable/btn_red" />
+    </LinearLayout>
+
+</LinearLayout>
