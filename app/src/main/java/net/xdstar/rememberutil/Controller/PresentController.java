@@ -1,9 +1,11 @@
 package net.xdstar.rememberutil.Controller;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import net.xdstar.rememberutil.DataBase.DBController;
 import net.xdstar.rememberutil.Model.UnitModel;
+import net.xdstar.rememberutil.R;
 import net.xdstar.rememberutil.Util.TextUtil;
 import net.xdstar.rememberutil.View.PresentView;
 
@@ -21,6 +23,11 @@ public class PresentController {
     private Context context;
     private PresentView presentView;
     private ArrayList<Integer> arrayList = new ArrayList<>();
+    public enum DELETE_RESULT{
+        SUCCESS,
+        FAIL
+    }
+
 
     public PresentController(Context context, PresentView presentView) {
         this.context = context;
@@ -34,7 +41,12 @@ public class PresentController {
     }
 
     public void subUnit(int id) {
-
+        DELETE_RESULT result = DBController.instance().deleteUnit(id);
+        if(result == DELETE_RESULT.SUCCESS) {
+            Toast.makeText(context, context.getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, context.getString(R.string.delete_fail), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private UnitModel createUnits(int id) {

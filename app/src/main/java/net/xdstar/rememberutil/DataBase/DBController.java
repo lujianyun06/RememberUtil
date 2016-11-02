@@ -2,6 +2,7 @@ package net.xdstar.rememberutil.DataBase;
 
 import android.content.Context;
 
+import net.xdstar.rememberutil.Controller.PresentController;
 import net.xdstar.rememberutil.Model.UnitModel;
 import net.xdstar.rememberutil.Util.RememberUtil;
 import net.xdstar.rememberutil.Util.TextUtil;
@@ -96,18 +97,22 @@ public class DBController {
         return unit;
     }
 
-    public void deleteUnit(final int id) {
+    public PresentController.DELETE_RESULT deleteUnit(final int id) {
+        PresentController.DELETE_RESULT delete_result = PresentController.DELETE_RESULT.FAIL;
         mRealm.beginTransaction();
         RealmResults results = mRealm.where(UnitModel.class).equalTo("id", id).findAll();
-        results.remove(0);
+        if (results.size() > 0) {
+            results.remove(0);
+            delete_result = PresentController.DELETE_RESULT.SUCCESS;
+        }
         mRealm.commitTransaction();
+        return delete_result;
     }
 
     public RealmResults<UnitModel> getAllUnits() {
         RealmResults<UnitModel> results = mRealm.where(UnitModel.class).findAll();
         return results;
     }
-
 
 
     public void updateUnit(int id) {

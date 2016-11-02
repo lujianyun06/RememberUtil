@@ -1,16 +1,15 @@
 package net.xdstar.rememberutil.View;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.xdstar.rememberutil.Controller.PresentController;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnSubOld;
     private ArrayList<Integer> arrayList = new ArrayList<>();
     private PresentController controller;
-    private Activity activity = this;
+    private MainActivity activity = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +55,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == btnAddNew) {
            addUnit();
         } else if (v == btnSubNew) {
-            subUnit();
+            subNew();
         } else if (v == btnSubOld) {
-
+            subOld();
         }
     }
 
     public void addUnit() {
+        DialogPresenter.getInstance().showAddNewDialog(this);
+    }
+
+    public void subNew() {
+
+    }
+
+    public void subOld() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.dialog_layout, null);
+        ViewGroup viewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.dialog_layout, null);
+//                (ViewGroup) LayoutInflater.from(this).inflate(R.layout.dialog_layout, null);
         final EditText editText = (EditText) viewGroup.findViewById(R.id.edit);
+        final TextView tvTip = (TextView) viewGroup.findViewById(R.id.tv_tip);
+        tvTip.setText(getResources().getString(R.string.input_unit_tip));
         builder.setView(viewGroup)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
@@ -73,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         try {
                             String num = editText.getText().toString();
                             int i = Integer.parseInt(num);
-                            UnitModel unit = controller.addUnit(i);
-                            addNewUnitView(unit);
+                            DialogPresenter.getInstance().showSubOldDialog(activity, i);
+
                         } catch (Exception e) {
                             Toast.makeText(activity, "输入整数!", Toast.LENGTH_SHORT).show();
                         }
@@ -87,12 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }).create().show();
     }
 
-    public void subUnit() {
 
-    }
-
-
-    private void addNewUnitView(UnitModel unit) {
+    public void addNewUnitView(UnitModel unit) {
         if (unit == null) {
             Toast.makeText(this, "这个单元已经添加过了", Toast.LENGTH_SHORT).show();
             return;
@@ -101,12 +107,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newUnits.addView(unitView);
     }
 
-    private void showOldUnit() {
+    public void showOldUnit() {
         oldUnits.removeAllViews();
         ArrayList<UnitModel> units = controller.getUnitToBeRevised(4);
         for (UnitModel unit : units) {
             UnitView unitView = new UnitView(this, false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
             oldUnits.addView(unitView);
         }
+    }
+
+    public PresentController getPresentController() {
+        return controller;
     }
 }

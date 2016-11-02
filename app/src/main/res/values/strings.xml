@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">记忆助手</string>
+    <string name="input_unit_tip">请输入单元数(只能为整数)</string>
+    <string name="delete_old_tip">您确定要从数据库删除这个单元吗？</string>
+    <string name="delete_success">删除成功！</string>
+    <string name="delete_fail">未找到该单元号</string>
 </resources>
