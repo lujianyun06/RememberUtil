@@ -4,4 +4,8 @@
     <string name="delete_old_tip">您确定要从数据库删除这个单元吗？</string>
     <string name="delete_success">删除成功！</string>
     <string name="delete_fail">未找到该单元号</string>
+    <string name="new_units">新添加的单元</string>
+    <string name="old_units">需要复习的单元(轻触表示完成复习)</string>
+    <string name="add_new_unit">添加新单元</string>
+    <string name="delete">删除</string>
 </resources>

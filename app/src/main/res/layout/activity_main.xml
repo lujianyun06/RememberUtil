@@ -13,6 +13,12 @@
         android:paddingTop="30dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+        <TextView
+            android:text="@string/new_units"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -35,7 +41,7 @@
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:textColor="@color/white"
-                android:text="添加新单元"
+                android:text="@string/add_new_unit"
                 android:background="@drawable/selector_btn_green" />
 
             <Button
@@ -44,7 +50,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
-                android:text="删除"
+                android:text="@string/delete"
                 android:background="@drawable/selector_btn_red" />
         </LinearLayout>
 
@@ -57,6 +63,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+        <TextView
+            android:text="@string/old_units"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -74,9 +86,8 @@
             android:id="@+id/btn_sub_old"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
             android:textColor="@color/white"
-            android:text="删除"
+            android:text="@string/delete"
             android:background="@drawable/selector_btn_red" />
     </LinearLayout>
 

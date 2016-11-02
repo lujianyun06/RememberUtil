@@ -9,4 +9,5 @@
     <color name="pressed_red">#d01111</color>
     <color name="white">#FFFFFF</color>
     <color name="light_blue">#2998FF</color>
+    <color name="black">#000000</color>
 </resources>
