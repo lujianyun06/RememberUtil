@@ -36,7 +36,7 @@
                 android:layout_height="30dp"
                 android:textColor="@color/white"
                 android:text="添加新单元"
-                android:background="@drawable/btn_green" />
+                android:background="@drawable/selector_btn_green" />
 
             <Button
                 android:id="@+id/btn_sub_unit"
@@ -45,7 +45,7 @@
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
                 android:text="删除"
-                android:background="@drawable/btn_red" />
+                android:background="@drawable/selector_btn_red" />
         </LinearLayout>
 
     </LinearLayout>
@@ -77,7 +77,7 @@
             android:layout_marginLeft="10dp"
             android:textColor="@color/white"
             android:text="删除"
-            android:background="@drawable/btn_red" />
+            android:background="@drawable/selector_btn_red" />
     </LinearLayout>
 
 </LinearLayout>

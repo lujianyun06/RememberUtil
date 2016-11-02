@@ -72,6 +72,7 @@ public class PresentController {
 
     public ArrayList<UnitModel> getUnitToBeRevised(int unitCounts) {
         ArrayList<UnitModel> unitModels = new ArrayList<>();
+        DBController.instance().updatePriority();
         RealmResults<UnitModel> units = DBController.instance().getAllUnits();
         units.sort("priority", Sort.DESCENDING);
         if (units.size() <= unitCounts)

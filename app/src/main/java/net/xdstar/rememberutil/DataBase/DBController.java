@@ -116,13 +116,22 @@ public class DBController {
             return;
         }
         mRealm.beginTransaction();
-        int newReviseTime = unit.getReviseTime() + 1;
-        String oldUpdateTime = unit.getUpdateTime();
         String newUpdateTime = TextUtil.Calendar2String(Calendar.getInstance());
-        double newPriority = RememberUtil.getInstance().computePriority(oldUpdateTime, newUpdateTime, newReviseTime);
-        unit.setPriority(newPriority);
-        unit.setReviseTime(newReviseTime);
+        unit.setReviseTime(unit.getReviseTime() + 1);
         unit.setUpdateTime(newUpdateTime);
+        mRealm.commitTransaction();
+    }
+
+    public void updatePriority() {
+        mRealm.beginTransaction();
+        RealmResults<UnitModel> results = getAllUnits();
+        for (int i = 0; i < results.size(); i++) {
+            UnitModel unit = results.get(i);
+            String oldUpdateTime = unit.getUpdateTime();
+            String newUpdateTime = TextUtil.Calendar2String(Calendar.getInstance());
+            double newPriority = RememberUtil.getInstance().computePriority(oldUpdateTime, newUpdateTime, unit.getReviseTime());
+            unit.setPriority(newPriority);
+        }
         mRealm.commitTransaction();
     }
 
