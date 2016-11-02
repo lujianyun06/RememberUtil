@@ -35,7 +35,6 @@ public class PresentController {
     }
 
     public UnitModel addUnit(int id) {
-        arrayList.add(id);
         UnitModel newUnit = createUnits(id);
         return newUnit;
     }
@@ -60,6 +59,7 @@ public class PresentController {
 
         UnitModel newUnit = createNewUnit(id);
         DBController.instance().setUnit(newUnit);
+        arrayList.add(id);
         return newUnit;
     }
 
@@ -94,5 +94,10 @@ public class PresentController {
             unitModels.add(units.get(i));
         }
         return unitModels;
+    }
+
+    public UnitModel getUnit(final int id) {
+        UnitModel unitModel = DBController.instance().getUnit(id);
+        return  unitModel;
     }
 }

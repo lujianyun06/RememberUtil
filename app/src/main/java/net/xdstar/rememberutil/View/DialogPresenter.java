@@ -52,16 +52,15 @@ public class DialogPresenter {
         }).create().show();
     }
 
-    public void showSubOldDialog(final MainActivity activity, final int id) {
+    public void showSubTipDialog(final MainActivity activity, final int id, final int flag) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(activity.getResources().getString(R.string.delete_old_tip))
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
-
                             activity.getPresentController().subUnit(id);
-                            activity.showOldUnit();
+                            activity.updateView(flag, id);
                         } catch (Exception e) {
                             Toast.makeText(activity, "输入整数!", Toast.LENGTH_SHORT).show();
                         }

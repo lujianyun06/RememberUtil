@@ -5,4 +5,5 @@ package net.xdstar.rememberutil.View;
  */
 
 public interface PresentView {
+    void updateView(int flag, int id);
 }

@@ -20,21 +20,23 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, PresentView{
 
-    private GridLayout newUnits;
-    private GridLayout oldUnits;
+    private GridLayout gridNewUnits;
+    private GridLayout gridOldUnits;
     private Button btnAddNew;
     private Button btnSubNew;
     private Button btnSubOld;
-    private ArrayList<Integer> arrayList = new ArrayList<>();
+    private ArrayList<Integer> newIdList = new ArrayList<>();
     private PresentController controller;
     private MainActivity activity = this;
+    private static int DELETE_OLD = 0;
+    private static int DELETE_NEW = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         controller = new PresentController(this, this);
-        newUnits = (GridLayout) findViewById(R.id.grid_new_unit);
-        oldUnits = (GridLayout) findViewById(R.id.grid_old_unit);
+        gridNewUnits = (GridLayout) findViewById(R.id.grid_new_unit);
+        gridOldUnits = (GridLayout) findViewById(R.id.grid_old_unit);
         btnAddNew = (Button) findViewById(R.id.btn_add_unit);
         btnSubNew = (Button) findViewById(R.id.btn_sub_unit);
         btnSubOld = (Button) findViewById(R.id.btn_sub_old);
@@ -53,23 +55,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == btnAddNew) {
-           addUnit();
+           onClickAddUnit();
         } else if (v == btnSubNew) {
-            subNew();
+            onClickSubNew();
         } else if (v == btnSubOld) {
-            subOld();
+            onClickSubOld();
         }
     }
 
-    public void addUnit() {
+    public void onClickAddUnit() {
         DialogPresenter.getInstance().showAddNewDialog(this);
     }
 
-    public void subNew() {
-
-    }
-
-    public void subOld() {
+    public void onClickSubNew() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         ViewGroup viewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.dialog_layout, null);
 //                (ViewGroup) LayoutInflater.from(this).inflate(R.layout.dialog_layout, null);
@@ -83,7 +81,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         try {
                             String num = editText.getText().toString();
                             int i = Integer.parseInt(num);
-                            DialogPresenter.getInstance().showSubOldDialog(activity, i);
+                            if (newIdList.contains(i)) {
+                                DialogPresenter.getInstance().showSubTipDialog(activity, i, DELETE_NEW);
+                            } else {
+                                Toast.makeText(activity, "你没有新添加这个单元!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (Exception e) {
+                            Toast.makeText(activity, "输入整数!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).create().show();
+    }
+
+    public void onClickSubOld() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        ViewGroup viewGroup = (ViewGroup) getLayoutInflater().inflate(R.layout.dialog_layout, null);
+//                (ViewGroup) LayoutInflater.from(this).inflate(R.layout.dialog_layout, null);
+        final EditText editText = (EditText) viewGroup.findViewById(R.id.edit);
+        final TextView tvTip = (TextView) viewGroup.findViewById(R.id.tv_tip);
+        tvTip.setText(getResources().getString(R.string.input_unit_tip));
+        builder.setView(viewGroup)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            String num = editText.getText().toString();
+                            int i = Integer.parseInt(num);
+                            DialogPresenter.getInstance().showSubTipDialog(activity, i, DELETE_OLD);
 
                         } catch (Exception e) {
                             Toast.makeText(activity, "输入整数!", Toast.LENGTH_SHORT).show();
@@ -103,20 +133,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "这个单元已经添加过了", Toast.LENGTH_SHORT).show();
             return;
         }
-        UnitView unitView = new UnitView(this, true, unit.getId(), unit.getUpdateTime(), 0, unit.getPriority());
-        newUnits.addView(unitView);
+        newIdList.add(unit.getId());
+        updateNewUnitsView();
     }
 
     public void showOldUnit() {
-        oldUnits.removeAllViews();
+        gridOldUnits.removeAllViews();
         ArrayList<UnitModel> units = controller.getUnitToBeRevised(4);
         for (UnitModel unit : units) {
             UnitView unitView = new UnitView(this, false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
-            oldUnits.addView(unitView);
+            gridOldUnits.addView(unitView);
         }
     }
 
     public PresentController getPresentController() {
         return controller;
     }
+
+    public void updateNewUnitsView() {
+        gridNewUnits.removeAllViews();
+        for (Integer i : newIdList) {
+            UnitModel unit = controller.getUnit(i);
+            UnitView unitView = new UnitView(this, true, unit.getId(), unit.getUpdateTime(), 0, unit.getPriority());
+            gridNewUnits.addView(unitView);
+        }
+    }
+
+    @Override
+    public void updateView(int flag, int id) {
+        deleteUnitFromList(id);
+        if (flag == DELETE_NEW) {
+            updateNewUnitsView();
+        } else if (flag == DELETE_OLD) {
+            showOldUnit();
+        }
+    }
+
+    public void deleteUnitFromList(final int id) {
+        if (newIdList.contains(id)) {
+            Integer idObj  = id;
+            newIdList.remove(idObj);
+        }
+    }
+
 }
