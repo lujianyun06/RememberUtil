@@ -3,6 +3,8 @@ package net.xdstar.rememberutil.View;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +32,14 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
     private TextView tvReviseCount;
     private TextView tvPriority;
     private boolean isNew;
+    private ViewGroup container;
 
 
     public UnitView(Context context, final boolean isNew, final int id, final String updateTime, final int reviseCount, final double priority) {
         super(context);
         setParams(isNew, id, updateTime, reviseCount, priority);
         ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.layout_unit_view, null);
+        container = (ViewGroup) viewGroup.findViewById(R.id.container);
         tvId = (TextView) viewGroup.findViewById(R.id.tv_id);
         tvTime = (TextView) viewGroup.findViewById(R.id.tv_time);
         tvReviseCount = (TextView) viewGroup.findViewById(R.id.tv_revise_count);
@@ -73,6 +77,7 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
                         }
                     })
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             RememberUtil.getInstance().updateUnit(id);
@@ -84,11 +89,13 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void updateView() {
         UnitModel unit = DBController.instance().getUnit(id);
         if (unit == null) {
             return;
         }
+        container.setBackground(getResources().getDrawable(R.drawable.view_frame_green));
         setParams(false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
         showView();
     }

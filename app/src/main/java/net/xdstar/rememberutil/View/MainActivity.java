@@ -43,14 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAddNew.setOnClickListener(this);
         btnSubNew.setOnClickListener(this);
         btnSubOld.setOnClickListener(this);
+        updateNewUnitsView();
+        showOldUnit();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        updateNewUnitsView();
-        showOldUnit();
-
     }
 
     @Override
