@@ -32,7 +32,7 @@ public class DialogPresenter {
         final TextView tvTip = (TextView) viewGroup.findViewById(R.id.tv_tip);
         tvTip.setText(activity.getResources().getString(R.string.input_unit_tip));
         builder.setView(viewGroup)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
@@ -41,10 +41,10 @@ public class DialogPresenter {
                             UnitModel unit = activity.getPresentController().addUnit(i);
                             activity.addNewUnitView(unit);
                         } catch (Exception e) {
-                            Toast.makeText(activity, "输入整数!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, activity.getString(R.string.input_integer), Toast.LENGTH_SHORT).show();
                         }
                     }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -55,17 +55,17 @@ public class DialogPresenter {
     public void showSubTipDialog(final MainActivity activity, final int id, final int flag) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(activity.getResources().getString(R.string.delete_old_tip))
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(activity.getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
                             activity.getPresentController().subUnit(id);
-                            activity.updateView(flag, id);
+                            activity.updateUnitView(flag, id);
                         } catch (Exception e) {
-                            Toast.makeText(activity, "输入整数!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, activity.getString(R.string.input_integer), Toast.LENGTH_SHORT).show();
                         }
                     }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(activity.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

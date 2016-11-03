@@ -32,7 +32,7 @@ public class RememberUtil {
         int timeOffset = getCalendarOffset(oldCalendar, newCalendar);
         double R1 = 1 - 0.56 * Math.pow(timeOffset, 0.06);
         double R2 = 1 / ((double)newReviseTime + 1);
-        double newPriority = 1 / R1 + R2;
+        double newPriority = 1 / R1 + R2;   //It means reviseTime can only ensure decimal fraction， updateTime ensure integer.
         return newPriority;
     }
 

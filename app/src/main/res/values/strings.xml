@@ -8,4 +8,9 @@
     <string name="old_units">需要复习的单元(轻触表示完成复习)</string>
     <string name="add_new_unit">添加新单元</string>
     <string name="delete">删除</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="input_integer">输入整数！</string>
+    <string name="today_revised">今天已复习单元数: </string>
+    <string name="list_units">分别为:</string>
 </resources>

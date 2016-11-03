@@ -18,18 +18,20 @@ import net.xdstar.rememberutil.R;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, PresentView{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, PresentView {
 
     private GridLayout gridNewUnits;
     private GridLayout gridOldUnits;
     private Button btnAddNew;
     private Button btnSubNew;
     private Button btnSubOld;
+    private TextView tvRevisedCount;
     private ArrayList<Integer> newIdList = new ArrayList<>();
     private PresentController controller;
     private MainActivity activity = this;
     private static int DELETE_OLD = 0;
     private static int DELETE_NEW = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAddNew = (Button) findViewById(R.id.btn_add_unit);
         btnSubNew = (Button) findViewById(R.id.btn_sub_unit);
         btnSubOld = (Button) findViewById(R.id.btn_sub_old);
+        tvRevisedCount = (TextView) findViewById(R.id.tv_revised_count);
         btnAddNew.setOnClickListener(this);
         btnSubNew.setOnClickListener(this);
         btnSubOld.setOnClickListener(this);
         updateNewUnitsView();
+        updateRevisedView(controller.getRevisedCount(), controller.getRevisedList());
         showOldUnit();
+//        RevisedFileUtil.getInstance().getRevisedModel();
     }
 
     @Override
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v == btnAddNew) {
-           onClickAddUnit();
+            onClickAddUnit();
         } else if (v == btnSubNew) {
             onClickSubNew();
         } else if (v == btnSubOld) {
@@ -141,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gridOldUnits.removeAllViews();
         ArrayList<UnitModel> units = controller.getUnitToBeRevised(4);
         for (UnitModel unit : units) {
-            UnitView unitView = new UnitView(this, false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
+            UnitView unitView = new UnitView(this, controller, false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
             gridOldUnits.addView(unitView);
         }
     }
@@ -154,24 +159,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gridNewUnits.removeAllViews();
         for (Integer i : newIdList) {
             UnitModel unit = controller.getUnit(i);
-            UnitView unitView = new UnitView(this, true, unit.getId(), unit.getUpdateTime(), 0, unit.getPriority());
+            UnitView unitView = new UnitView(this, controller, true, unit.getId(), unit.getUpdateTime(), 0, unit.getPriority());
             gridNewUnits.addView(unitView);
         }
     }
 
     @Override
-    public void updateView(int flag, int id) {
-        deleteUnitFromList(id);
+    public void updateUnitView(int flag, int id) {
         if (flag == DELETE_NEW) {
+            deleteUnitFromNewList(id);
             updateNewUnitsView();
         } else if (flag == DELETE_OLD) {
             showOldUnit();
         }
     }
 
-    public void deleteUnitFromList(final int id) {
+    @Override
+    public void updateRevisedView(int count, ArrayList<Integer> revisedIdList) {
+        StringBuilder builder  = new StringBuilder();
+        builder.append(getString(R.string.today_revised) + count + "   " + getString(R.string.list_units));
+        for (int i = 0; i < revisedIdList.size(); i++) {
+            if (i == revisedIdList.size() - 1) {
+                builder.append(revisedIdList.get(i));
+            } else {
+                builder.append(revisedIdList.get(i) + "、");
+            }
+
+        }
+        tvRevisedCount.setText(builder.toString());
+    }
+
+    public void deleteUnitFromNewList(final int id) {
         if (newIdList.contains(id)) {
-            Integer idObj  = id;
+            Integer idObj = id;
             newIdList.remove(idObj);
         }
     }

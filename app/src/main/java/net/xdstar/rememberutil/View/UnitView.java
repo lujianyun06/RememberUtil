@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import net.xdstar.rememberutil.Controller.PresentController;
 import net.xdstar.rememberutil.DataBase.DBController;
 import net.xdstar.rememberutil.Model.UnitModel;
 import net.xdstar.rememberutil.R;
@@ -33,10 +34,15 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
     private TextView tvPriority;
     private boolean isNew;
     private ViewGroup container;
+    private PresentController controller;
 
 
-    public UnitView(Context context, final boolean isNew, final int id, final String updateTime, final int reviseCount, final double priority) {
+    public UnitView(Context context, final PresentController controller,
+                    final boolean isNew, final int id,
+                    final String updateTime, final int reviseCount, final double priority) {
         super(context);
+        this.context = context;
+        this.controller = controller;
         setParams(isNew, id, updateTime, reviseCount, priority);
         ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.layout_unit_view, null);
         container = (ViewGroup) viewGroup.findViewById(R.id.container);
@@ -82,6 +88,7 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
                         public void onClick(DialogInterface dialog, int which) {
                             RememberUtil.getInstance().updateUnit(id);
                             updateView();
+                            controller.updateRevisedCount();
                         }
                     })
                     .show();

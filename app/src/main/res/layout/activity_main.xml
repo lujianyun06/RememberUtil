@@ -81,6 +81,15 @@
             </GridLayout>
         </ScrollView>
 
+        <TextView
+            android:id="@+id/tv_revised_count"
+            android:gravity="left"
+            android:paddingLeft="30dp"
+            tools:text="dasdada"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:layout_marginTop="20dp"
             android:id="@+id/btn_sub_old"

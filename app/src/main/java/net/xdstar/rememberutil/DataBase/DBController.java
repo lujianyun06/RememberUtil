@@ -121,7 +121,7 @@ public class DBController {
             return;
         }
         mRealm.beginTransaction();
-        String newUpdateTime = TextUtil.Calendar2String(Calendar.getInstance());
+        String newUpdateTime = TextUtil.calendar2String(Calendar.getInstance());
         unit.setReviseTime(unit.getReviseTime() + 1);
         unit.setUpdateTime(newUpdateTime);
         mRealm.commitTransaction();
@@ -133,12 +133,32 @@ public class DBController {
         for (int i = 0; i < results.size(); i++) {
             UnitModel unit = results.get(i);
             String oldUpdateTime = unit.getUpdateTime();
-            String newUpdateTime = TextUtil.Calendar2String(Calendar.getInstance());
+            String newUpdateTime = TextUtil.calendar2String(Calendar.getInstance());
             double newPriority = RememberUtil.getInstance().computePriority(oldUpdateTime, newUpdateTime, unit.getReviseTime());
             unit.setPriority(newPriority);
         }
         mRealm.commitTransaction();
     }
+
+//    public void createOrUpdateRevisedModel(final String date, final int id) {
+//        mRealm.beginTransaction();
+//        RealmResults<RevisedModel> results = getRevisedModel(date);
+//        RevisedModel revisedModel = null;
+//        if (results.size() <= 0) {
+//            revisedModel = new RevisedModel();
+//            revisedModel.setDate(date);
+//        } else {
+//            revisedModel = results.get(0);
+//        }
+//        revisedModel.getRevisedIdList().add(id);
+//        mRealm.copyToRealm(revisedModel);
+//        mRealm.commitTransaction();
+//    }
+//
+//    public RealmResults<RevisedModel> getRevisedModel(final String date) {
+//        RealmResults<RevisedModel> results = mRealm.where(RevisedModel.class).equalTo("date", date).findAll();
+//        return results;
+//    }
 
 
 }

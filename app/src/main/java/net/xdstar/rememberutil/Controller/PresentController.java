@@ -23,6 +23,7 @@ public class PresentController {
     private Context context;
     private PresentView presentView;
     private ArrayList<Integer> arrayList = new ArrayList<>();
+    private ArrayList<Integer> revisedList = new ArrayList<>();
     public enum DELETE_RESULT{
         SUCCESS,
         FAIL
@@ -49,7 +50,6 @@ public class PresentController {
     }
 
     private UnitModel createUnits(int id) {
-        ArrayList<Integer> curIds = new ArrayList<>();
         RealmResults<UnitModel> results = DBController.instance().getAllUnits();
         for (UnitModel unitModel : results) {
             if (unitModel.getId() == id) {
@@ -68,7 +68,7 @@ public class PresentController {
         UnitModel newUnit = new UnitModel();
         newUnit.setId(id);
         Calendar calendar = Calendar.getInstance();
-        String updateTime = TextUtil.Calendar2String(calendar);
+        String updateTime = TextUtil.calendar2String(calendar);
         newUnit.setUpdateTime(updateTime);
         newUnit.setReviseTime(0);
         newUnit.setPriority(1.6);
@@ -99,5 +99,30 @@ public class PresentController {
     public UnitModel getUnit(final int id) {
         UnitModel unitModel = DBController.instance().getUnit(id);
         return  unitModel;
+    }
+
+    public void updateRevisedCount(){
+        int count = getRevisedCount();
+        presentView.updateRevisedView(count, revisedList);
+    }
+
+    public int getRevisedCount(){
+        RealmResults<UnitModel> results = DBController.instance().getAllUnits();
+        int count = 0;
+        revisedList.clear();
+        for (int i = 0; i < results.size(); i++) {
+            UnitModel unit = results.get(i);
+            String str1 = TextUtil.calendar2DateString(Calendar.getInstance());
+            String str2 = TextUtil.calendarString2DateString(unit.getUpdateTime());
+            if (str1.equalsIgnoreCase(str2) && unit.getReviseTime() > 0) {
+                ++count;
+                revisedList.add(unit.getId());
+            }
+        }
+        return count;
+    }
+
+    public ArrayList<Integer> getRevisedList() {
+        return revisedList;
     }
 }
