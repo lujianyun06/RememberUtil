@@ -12,6 +12,7 @@ public class UnitModel extends RealmObject {
     @PrimaryKey
     private int id;
     private String updateTime;
+    private String createTime;
     private double  priority;
     private int reviseCount;
 
@@ -46,5 +47,13 @@ public class UnitModel extends RealmObject {
 
     public void setReviseTime(int reviseCount) {
         this.reviseCount = reviseCount;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 }

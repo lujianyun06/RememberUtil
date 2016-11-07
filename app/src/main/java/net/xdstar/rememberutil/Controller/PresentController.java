@@ -36,7 +36,7 @@ public class PresentController {
     }
 
     public UnitModel addUnit(int id) {
-        UnitModel newUnit = createUnits(id);
+        UnitModel newUnit = createUnit(id);
         return newUnit;
     }
 
@@ -49,7 +49,7 @@ public class PresentController {
         }
     }
 
-    private UnitModel createUnits(int id) {
+    private UnitModel createUnit(int id) {
         RealmResults<UnitModel> results = DBController.instance().getAllUnits();
         for (UnitModel unitModel : results) {
             if (unitModel.getId() == id) {
@@ -69,6 +69,7 @@ public class PresentController {
         newUnit.setId(id);
         Calendar calendar = Calendar.getInstance();
         String updateTime = TextUtil.calendar2String(calendar);
+        newUnit.setCreateTime(updateTime);
         newUnit.setUpdateTime(updateTime);
         newUnit.setReviseTime(0);
         newUnit.setPriority(1.6);
