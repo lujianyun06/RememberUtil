@@ -72,7 +72,7 @@ public class PresentController {
         newUnit.setCreateTime(updateTime);
         newUnit.setUpdateTime(updateTime);
         newUnit.setReviseTime(0);
-        newUnit.setPriority(1.6);
+        newUnit.setRememberRatio(0.4);
         return newUnit;
     }
 
@@ -87,7 +87,7 @@ public class PresentController {
         ArrayList<UnitModel> unitModels = new ArrayList<>();
         DBController.instance().updatePriority();
         RealmResults<UnitModel> units = DBController.instance().getAllUnits();
-        units.sort("priority", Sort.DESCENDING);
+        units.sort("rememberRatio", Sort.ASCENDING);
         if (units.size() <= unitCounts)
             unitCounts = units.size();
         unitCounts = (units.size() <= unitCounts)?units.size():unitCounts;

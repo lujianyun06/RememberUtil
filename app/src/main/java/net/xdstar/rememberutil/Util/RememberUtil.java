@@ -31,8 +31,8 @@ public class RememberUtil {
         Calendar newCalendar = TextUtil.String2Calendar(newUpdateTime);
         int timeOffset = getCalendarOffset(oldCalendar, newCalendar);
         double R1 = 1 - 0.56 * Math.pow(timeOffset, 0.06);
-        double R2 = 1 / ((double)newReviseTime + 1);
-        double newPriority = 1 / R1 + R2;   //It means reviseTime can only ensure decimal fraction， updateTime ensure integer.
+        double R2 = getReviseRatio(newReviseTime);
+        double newPriority = 0.6 * R2 + 0.4 * R1;   //It means reviseTime can only ensure decimal fraction， updateTime ensure integer.
         return newPriority;
     }
 
@@ -46,6 +46,22 @@ public class RememberUtil {
         int offset = yearOffset + monthOffset + dayOffset + hourOffset;
         return offset;
 
+    }
+
+    public double getReviseRatio(int newReviseTime) {
+        final double a1 = 0.15;
+        final double a2 = 0.1;
+        final double b2 = -0.8;
+        final double c2 = 0.2;
+        double remeberRatio = 0;
+        if (newReviseTime <= 4 && newReviseTime >= 0) {
+            remeberRatio = a1 * newReviseTime;
+        } else if (newReviseTime <= 6 && newReviseTime > 4) {
+            remeberRatio = a2 * newReviseTime * newReviseTime + b2 * newReviseTime +c2;
+        } else {
+            remeberRatio = 1;
+        }
+        return remeberRatio;
     }
 
 

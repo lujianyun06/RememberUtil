@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gridOldUnits.removeAllViews();
         ArrayList<UnitModel> units = controller.getUnitToBeRevised(4);
         for (UnitModel unit : units) {
-            UnitView unitView = new UnitView(this, controller, false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
+            UnitView unitView = new UnitView(this, controller, false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getRememberRatio());
             gridOldUnits.addView(unitView);
         }
     }
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gridNewUnits.removeAllViews();
         for (Integer i : newIdList) {
             UnitModel unit = controller.getUnit(i);
-            UnitView unitView = new UnitView(this, controller, true, unit.getId(), unit.getUpdateTime(), 0, unit.getPriority());
+            UnitView unitView = new UnitView(this, controller, true, unit.getId(), unit.getUpdateTime(), 0, unit.getRememberRatio());
             gridNewUnits.addView(unitView);
         }
     }

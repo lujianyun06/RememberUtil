@@ -13,7 +13,7 @@ public class UnitModel extends RealmObject {
     private int id;
     private String updateTime;
     private String createTime;
-    private double  priority;
+    private double rememberRatio;
     private int reviseCount;
 
 
@@ -33,12 +33,12 @@ public class UnitModel extends RealmObject {
         this.updateTime = updateTime;
     }
 
-    public double getPriority() {
-        return priority;
+    public double getRememberRatio() {
+        return rememberRatio;
     }
 
-    public void setPriority(double priority) {
-        this.priority = priority;
+    public void setRememberRatio(double rememberRatio) {
+        this.rememberRatio = rememberRatio;
     }
 
     public int getReviseTime() {

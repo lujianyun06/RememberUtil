@@ -26,7 +26,7 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
     private Context context;
     private int id;
     private String updateTime;
-    private double priority;
+    private double rememberRatio;
     private int reviseCount;
     private TextView tvId;
     private TextView tvTime;
@@ -103,7 +103,7 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
             return;
         }
         container.setBackground(getResources().getDrawable(R.drawable.view_frame_green));
-        setParams(false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getPriority());
+        setParams(false, unit.getId(), unit.getUpdateTime(), unit.getReviseTime(), unit.getRememberRatio());
         showView();
     }
 
@@ -111,7 +111,7 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
         this.id = id;
         this.isNew = isNew;
         this.updateTime = updateTime;
-        this.priority = priority;
+        this.rememberRatio = priority;
         this.reviseCount = reviseCount;
     }
 
@@ -119,7 +119,7 @@ public class UnitView extends RelativeLayout implements View.OnClickListener {
         tvId.setText(String.valueOf(id) + "单元");
         tvTime.setText(updateTime);
         tvReviseCount.setText("复习次数:" + String.valueOf(reviseCount));
-        String priorityStr = String.format("%.4f", priority);
+        String priorityStr = String.format("%.4f", rememberRatio);
         tvPriority.setText(priorityStr);
     }
 }

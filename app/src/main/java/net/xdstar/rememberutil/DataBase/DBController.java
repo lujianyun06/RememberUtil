@@ -60,7 +60,7 @@ public class DBController {
                 .Builder(mContext)
                 .name(dbname)
                 .schemaVersion(VERSION)
-                .migration(new DBMigration())
+//                .migration(new DBMigration())
                 .build();
 
         try {
@@ -135,7 +135,7 @@ public class DBController {
             String oldUpdateTime = unit.getUpdateTime();
             String newUpdateTime = TextUtil.calendar2String(Calendar.getInstance());
             double newPriority = RememberUtil.getInstance().computePriority(oldUpdateTime, newUpdateTime, unit.getReviseTime());
-            unit.setPriority(newPriority);
+            unit.setRememberRatio(newPriority);
         }
         mRealm.commitTransaction();
     }
